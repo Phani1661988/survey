@@ -1,0 +1,30 @@
+<% if user_signed_in? %>
+  <li>
+  <%= link_to('Logout', destroy_user_session_path, method: :delete) %>        
+  </li>
+<% end %> <br/>
+
+<% if !@question.responses.blank? %>
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @question.responses.each do |response| %>
+      <tr>
+      	<td> <%= response.response %> </td>
+        <% if current_user.is_admin == true %>
+          <td><%= link_to 'Destroy', response, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>        
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+
+<br>
+
+<%= link_to 'back', test_survey_path(@question.test_survey_id) %>
